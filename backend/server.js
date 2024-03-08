@@ -24,6 +24,7 @@ connectDB();
 // set security http headers
 app.use(helmet());
 
+app.enable("trust proxy");
 // Rate limit
 const limiter = rateLimit({
   // max: 100,
@@ -32,6 +33,7 @@ const limiter = rateLimit({
   message: "Too many request from this Ip, Please try again later",
   // 100 req from same ip in 1 hour
 });
+
 app.use("/api", limiter);
 
 // Body parse, reading data from body into req.body

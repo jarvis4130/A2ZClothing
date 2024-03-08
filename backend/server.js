@@ -27,8 +27,8 @@ app.use(helmet());
 app.enable("trust proxy");
 // Rate limit
 const limiter = rateLimit({
-  // max: 100,
-  max: 1000000,
+  max: 100,
+  // max: 1000000,
   windowMs: 60 * 60 * 1000,
   message: "Too many request from this Ip, Please try again later",
   // 100 req from same ip in 1 hour

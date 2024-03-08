@@ -24,7 +24,7 @@ connectDB();
 // set security http headers
 app.use(helmet());
 
-app.enable("trust proxy");
+app.set('trust proxy', 1); // or app.set('trust proxy', 2);
 // Rate limit
 const limiter = rateLimit({
   max: 100,

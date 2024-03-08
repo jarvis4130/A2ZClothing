@@ -9,6 +9,7 @@ const hpp = require("hpp");
 const cookieParser = require("cookie-parser");
 const path = require("path");
 const compression = require("compression");
+const cors = require('cors');
 
 const productRouter = require("./routes/productRoute");
 const userRouter = require("./routes/userRoute");
@@ -25,6 +26,11 @@ connectDB();
 app.use(helmet());
 
 app.set('trust proxy', 1); // or app.set('trust proxy', 2);
+
+// 1) GLOBAL MIDDLEWARES
+// Implement CORS
+app.use(cors());
+
 // Rate limit
 const limiter = rateLimit({
   max: 100,

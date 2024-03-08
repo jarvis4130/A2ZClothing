@@ -48,45 +48,15 @@ const uploadUserPhoto = upload.single("photo");
 const resizeUserPhoto = asyncHandler(async (req, res, next) => {
   if (!req.file) return next();
 
-  logger.info("Before sharp processing:", req.file);
-
   req.file.filename = `user-${req.user._id}-${Date.now()}.jpeg`;
 
-  const storagePath = path.join(__dirname, "..", "..", "uploads");
-  logger.info("Storage Path:", storagePath);
-
-  try {
-    const processedImageBuffer = await sharp(req.file.buffer)
-      .resize(500, 500)
-      .toFormat('jpeg')
-      .jpeg({ quality: 90 })
-      .toBuffer();
-
-    // Store the processed image buffer in the uploads directory
-    const filePath = path.join(storagePath, req.file.filename);
-    await sharp(processedImageBuffer).toFile(filePath);
-
-    logger.info("After sharp processing:", req.file);
-  } catch (error) {
-    logger.error("Error during sharp processing:", error);
-    return next(new AppError("Error processing image", 500));
-  }
-
+  await sharp(req.file.buffer)
+    .resize(500, 500)
+    .toFormat("jpeg")
+    .jpeg({ quality: 90 })
+    .toFile(`frontend/public/img/user/${req.file.filename}`);
   next();
 });
-
-// const resizeUserPhoto = asyncHandler(async (req, res, next) => {
-//   if (!req.file) return next();
-
-//   req.file.filename = `user-${req.user._id}-${Date.now()}.jpeg`;
-
-//   sharp(req.file.buffer)
-//     .resize(500, 500)
-//     .toFormat("jpeg")
-//     .jpeg({ quality: 90 })
-//     .toFile(`frontend/public/img/user/${req.file.filename}`);
-//   next();
-// });
 
 const getMe = (req, res, next) => {
   req.params.id = req.user._id;

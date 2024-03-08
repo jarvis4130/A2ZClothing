@@ -12,7 +12,7 @@ function HomeScreen() {
 
   // Get the values of 'page' and 'limit' from the query parameters
   const page = queryParams.get("page") || 1;
-  const limit = process.env.PAGINATION_LIMIT || 8;
+  const limit = 8;
   const { data, isLoading, error } = useGetProductsQuery({
     page,
     limit,

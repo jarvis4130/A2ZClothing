@@ -6,7 +6,7 @@ const AppError = require("../utils/AppError");
 const Email = require("../utils/email");
 const crypto = require("crypto");
 
-const createSendToken = (user, statusCode, res) => {
+const createSendToken = (user, statusCode, req, res) => {
   const token = generateToken(user._id);
 
   const cookieOptions = {
@@ -52,7 +52,7 @@ const signUp = asyncHandler(async (req, res, next) => {
 
   await new Email(newUser, url).sendWelcome();
 
-  createSendToken(newUser, 201, res);
+  createSendToken(newUser, 201, req, res);
 });
 
 // @desc    Login user
@@ -71,7 +71,7 @@ const login = asyncHandler(async (req, res, next) => {
     return next(new AppError("Invalid credentials", 401));
   }
 
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, req, res);
 });
 
 const logOut = asyncHandler(async (req, res, next) => {
@@ -243,7 +243,7 @@ const resetPassword = asyncHandler(async (req, res, next) => {
   // 3)update change password
   // 4)log user in , send JWT
 
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, req, res);
 });
 
 // @desc    UpdatePassword
@@ -261,7 +261,7 @@ const updateMyPassword = asyncHandler(async (req, res, next) => {
   user.passwordConfirm = req.body.passwordConfirm;
   await user.save();
   // 4)login user , JWT
-  createSendToken(user, 200, res);
+  createSendToken(user, 200, req, res);
 });
 
 module.exports = {

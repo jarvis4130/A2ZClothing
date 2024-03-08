@@ -61,7 +61,9 @@ const resizeUserPhoto = asyncHandler(async (req, res, next) => {
       .resize(500, 500)
       .toFormat('jpeg')
       .jpeg({ quality: 90 })
-      .toFile(path.join(storagePath, req.file.filename));
+      
+      const filePath = path.join(storagePath, req.file.filename);
+    await sharp(processedImageBuffer).toFile(filePath);
 
     logger.info('After sharp processing:', req.file);
   } catch (error) {

@@ -11,17 +11,16 @@ const multer = require("multer");
 const sharp = require("sharp");
 const path = require("path");
 
-const winston = require('winston');
+const winston = require("winston");
 const { combine, timestamp, printf } = winston.format;
 const myFormat = printf(({ level, message, timestamp }) => {
   return `${timestamp} ${level}: ${message}`;
 });
 const logger = winston.createLogger({
-  level: 'debug', // Set the desired logging level here
+  level: "debug", // Set the desired logging level here
   format: combine(timestamp(), myFormat),
   transports: [new winston.transports.Console()],
 });
-
 
 // const multerStorage = multer.diskStorage({
 //   destination: (req, file, cb) => {
@@ -49,26 +48,28 @@ const uploadUserPhoto = upload.single("photo");
 const resizeUserPhoto = asyncHandler(async (req, res, next) => {
   if (!req.file) return next();
 
-  logger.info('Before sharp processing:', req.file);
+  logger.info("Before sharp processing:", req.file);
 
   req.file.filename = `user-${req.user._id}-${Date.now()}.jpeg`;
 
-  const storagePath = path.join(__dirname, '..', '..','uploads');
-  logger.info('Storage Path:', storagePath);
+  const storagePath = path.join(__dirname, "..", "..", "uploads");
+  logger.info("Storage Path:", storagePath);
 
   try {
-    await sharp(req.file.buffer)
+    const processedImageBuffer = await sharp(req.file.buffer)
       .resize(500, 500)
       .toFormat('jpeg')
       .jpeg({ quality: 90 })
-      
-      const filePath = path.join(storagePath, req.file.filename);
+      .toBuffer();
+
+    // Store the processed image buffer in the uploads directory
+    const filePath = path.join(storagePath, req.file.filename);
     await sharp(processedImageBuffer).toFile(filePath);
 
-    logger.info('After sharp processing:', req.file);
+    logger.info("After sharp processing:", req.file);
   } catch (error) {
-    logger.error('Error during sharp processing:', error);
-    return next(new AppError('Error processing image', 500));
+    logger.error("Error during sharp processing:", error);
+    return next(new AppError("Error processing image", 500));
   }
 
   next();

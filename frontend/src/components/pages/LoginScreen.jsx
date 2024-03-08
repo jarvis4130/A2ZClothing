@@ -42,6 +42,10 @@ function LoginScreen() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(email==="" || password===""){
+      toast.error("Please enter your email");
+      return;
+    }
     try {
       const res = await login({ email, password }).unwrap();
       dispatch(setCredentials({ ...res }));
@@ -60,6 +64,7 @@ function LoginScreen() {
     }
     try {
       const res = await reset({ email }).unwrap();
+      console.log(res)
       // console.log(res);
       toast.success("Reset Link sent to your Mail.");
     } catch (error) {

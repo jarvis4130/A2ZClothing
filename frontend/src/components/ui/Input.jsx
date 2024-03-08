@@ -1,4 +1,4 @@
-function Input({ id, label, type, onChange, value ,notReq}) {
+function Input({ id, label, type, onChange, value }) {
   return (
     <div className="w-full relative">
       <div className="p-4">
@@ -8,7 +8,7 @@ function Input({ id, label, type, onChange, value ,notReq}) {
           type={type}
           className="w-full p-4 font-light bg-white border-2 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed peer "
           onChange={onChange}
-          {...(notReq ? { required: true } : {})}
+          // {...(notReq ? { required: true } : {})}
           value={value}
         />
         {/*absolute left-8 top-8  */}

@@ -9,7 +9,7 @@ const {
 } = require("./handleFactory");
 const multer = require("multer");
 const sharp = require("sharp");
-const path = require('path');
+const path = require("path");
 
 // const multerStorage = multer.diskStorage({
 //   destination: (req, file, cb) => {
@@ -39,13 +39,18 @@ const resizeUserPhoto = asyncHandler(async (req, res, next) => {
 
   req.file.filename = `user-${req.user._id}-${Date.now()}.jpeg`;
 
-  const storagePath = path.join(__dirname, '..', 'uploads', 'user');
+  const storagePath = path.join(__dirname, "..", "uploads", "user");
 
-  await sharp(req.file.buffer)
-    .resize(500, 500)
-    .toFormat('jpeg')
-    .jpeg({ quality: 90 })
-    .toFile(path.join(storagePath, req.file.filename));
+  try {
+    await sharp(req.file.buffer)
+      .resize(500, 500)
+      .toFormat("jpeg")
+      .jpeg({ quality: 90 })
+      .toFile(path.join(storagePath, req.file.filename));
+  } catch (error) {
+    console.log(error);
+    return next(new AppError("Error processing image", 500));
+  }
 
   next();
 });

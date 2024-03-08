@@ -29,14 +29,12 @@ app.set("trust proxy", 1); // or app.set('trust proxy', 2);
 
 // 1) GLOBAL MIDDLEWARES
 // Implement CORS
-app.use(
-  cors()
-);
+app.use(cors());
 
 // Rate limit
 const limiter = rateLimit({
-  max: 100,
-  // max: 1000000,
+  // max: 100,
+  max: 1000000,
   windowMs: 60 * 60 * 1000,
   message: "Too many request from this Ip, Please try again later",
   // 100 req from same ip in 1 hour

@@ -189,11 +189,11 @@ const forgotPassword = asyncHandler(async (req, res, next) => {
     // const resetURL = `${req.protocol}://${req.get(
     //   "host"
     // )}/api/users/resetPassword/${resetToken}`;
-    if (process.env.NODE_ENV === "production") {
+    // if (process.env.NODE_ENV === "production") {
       const resetURL = `https://a2zclothing.onrender.com/users/resetPassword/${resetToken}`;
-    } else {
-      const resetURL = `${req.protocol}://localhost:5173/users/resetPassword/${resetToken}`;
-    }
+    // } else {
+    //   const resetURL = `${req.protocol}://localhost:5173/users/resetPassword/${resetToken}`;
+    // }
     await new Email(user, resetURL).sendPasswordReset();
 
     res.status(200).json({

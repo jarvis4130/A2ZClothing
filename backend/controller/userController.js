@@ -53,7 +53,7 @@ const resizeUserPhoto = asyncHandler(async (req, res, next) => {
 
   req.file.filename = `user-${req.user._id}-${Date.now()}.jpeg`;
 
-  const storagePath = path.join(__dirname, '..', 'uploads', 'users');
+  const storagePath = path.join(__dirname, '..', '..','uploads');
   logger.info('Storage Path:', storagePath);
 
   try {

@@ -24,13 +24,13 @@ const cartSlice = createSlice({
       }
 
       state.cart.push(newItem);
-      localStorage.setItem("cart",JSON.stringify(state));
+      localStorage.setItem("cart", JSON.stringify(state));
     },
     deleteItem(state, action) {
       state.cart = state.cart.filter(
         (item) => item.productId !== action.payload
       );
-      localStorage.setItem('cart',JSON.stringify(state))
+      localStorage.setItem("cart", JSON.stringify(state));
     },
     increaseItemQuantity(state, action) {
       const item = state.cart.find((item) => item.productId === action.payload);
@@ -46,7 +46,7 @@ const cartSlice = createSlice({
       } else {
         toast.error("Product is out of stock or quantity limit reached.");
       }
-      localStorage.setItem('cart',JSON.stringify(state))
+      localStorage.setItem("cart", JSON.stringify(state));
       // update stock in database after doing the payment
     },
     decreaseItemQuantity(state, action) {
@@ -56,15 +56,15 @@ const cartSlice = createSlice({
       item.totalPrice = item.quantity * item.unitPrice;
 
       if (item.quantity === 0) cartSlice.caseReducers.deleteItem(state, action);
-      localStorage.setItem('cart',JSON.stringify(state))
+      localStorage.setItem("cart", JSON.stringify(state));
     },
     clearCart(state) {
       state.cart = [];
-      localStorage.setItem('cart',null)
+      localStorage.removeItem("cart");
     },
     saveShippingAddress(state, action) {
       state.shippingAddress = action.payload;
-      localStorage.setItem('cart',JSON.stringify(state))
+      localStorage.setItem("cart", JSON.stringify(state));
     },
   },
 });

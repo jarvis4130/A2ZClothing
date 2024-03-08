@@ -49,14 +49,14 @@ const resizeUserPhoto = asyncHandler(async (req, res, next) => {
   if (!req.file) return next();
 
   req.file.filename = `user-${req.user._id}-${Date.now()}.jpeg`;
-  const outputPath = path.join(__dirname, '../../frontend/public/img/user/', req.file.filename);
+  const outputPath = path.resolve(__dirname, '../../frontend/public/img/user/', req.file.filename);
 
   await sharp(req.file.buffer)
     .resize(500, 500)
     .toFormat("jpeg")
     .jpeg({ quality: 90 })
     .toFile(outputPath);
-    
+
   next();
 });
 

@@ -11,6 +11,11 @@ const multer = require("multer");
 const sharp = require("sharp");
 const path = require("path");
 
+const winston = require('winston');
+const logger = winston.createLogger({
+  transports: [new winston.transports.Console()],
+});
+
 // const multerStorage = multer.diskStorage({
 //   destination: (req, file, cb) => {
 //     cb(null, "frontend/public/img/user");
@@ -37,20 +42,24 @@ const uploadUserPhoto = upload.single("photo");
 const resizeUserPhoto = asyncHandler(async (req, res, next) => {
   if (!req.file) return next();
 
+  logger.info('Before sharp processing:', req.file);
+
   req.file.filename = `user-${req.user._id}-${Date.now()}.jpeg`;
 
-  const storagePath = path.join(__dirname, "..", "uploads", "users");
-  console.log(storagePath);
+  const storagePath = path.join(__dirname, '..', 'uploads', 'users');
+  logger.info('Storage Path:', storagePath);
 
   try {
     await sharp(req.file.buffer)
       .resize(500, 500)
-      .toFormat("jpeg")
+      .toFormat('jpeg')
       .jpeg({ quality: 90 })
       .toFile(path.join(storagePath, req.file.filename));
+
+    logger.info('After sharp processing:', req.file);
   } catch (error) {
-    console.log(error);
-    return next(new AppError("Error processing image", 500));
+    logger.error('Error during sharp processing:', error);
+    return next(new AppError('Error processing image', 500));
   }
 
   next();

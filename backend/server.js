@@ -25,6 +25,17 @@ connectDB();
 // set security http headers
 app.use(helmet());
 
+// Set Content Security Policy
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", 'https://js.stripe.com'],
+      // Add other directives as needed
+    },
+  })
+);
+
 app.set("trust proxy", 1); // or app.set('trust proxy', 2);
 
 // 1) GLOBAL MIDDLEWARES

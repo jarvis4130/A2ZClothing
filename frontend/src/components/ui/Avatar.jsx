@@ -1,11 +1,7 @@
 function Avatar({ userPic }) {
   return (
     <img
-      src={
-        userPic
-          ? `/img/user/${userPic}`
-          : "/img/user/placeholder.jpg"
-      }
+      src={userPic ? `/uploads/${userPic}` : "/img/user/placeholder.jpg"}
       className="rounded-full"
       height={30}
       width={30}

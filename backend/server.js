@@ -30,8 +30,8 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", 'https://js.stripe.com'],
-      frameSrc: ["'self'", 'https://js.stripe.com'],
+      scriptSrc: ["'self'", "https://js.stripe.com"],
+      frameSrc: ["'self'", "https://js.stripe.com"],
       // Add other directives as needed
     },
   })
@@ -90,6 +90,7 @@ app.use("/api/bookings", bookingRouter);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/dist")));
+  app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
   app.get("*", (req, res) =>
     res.sendFile(path.resolve(__dirname, "../frontend/dist", "index.html"))

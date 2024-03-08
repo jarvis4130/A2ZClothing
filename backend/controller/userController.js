@@ -56,6 +56,7 @@ const resizeUserPhoto = asyncHandler(async (req, res, next) => {
     .toFormat("jpeg")
     .jpeg({ quality: 90 })
     .toFile(outputPath);
+    
   next();
 });
 

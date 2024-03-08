@@ -9,7 +9,7 @@ const {
 } = require("./handleFactory");
 const multer = require("multer");
 const sharp = require("sharp");
-const Product = require("../model/productModel");
+const path = require('path');
 
 // const multerStorage = multer.diskStorage({
 //   destination: (req, file, cb) => {
@@ -38,23 +38,30 @@ const resizeUserPhoto = asyncHandler(async (req, res, next) => {
   if (!req.file) return next();
 
   req.file.filename = `user-${req.user._id}-${Date.now()}.jpeg`;
-  try {
-    await sharp(req.file.buffer)
-      .resize(500, 500)
-      .toFormat("jpeg")
-      .jpeg({ quality: 90 })
-      .toFile(`uploads/user/${req.file.filename}`);
-  } catch (error) {
-    return next(new AppError('Error processing image', 500));
-  }
-  next()
-  // sharp(req.file.buffer)
-  //   .resize(500, 500)
-  //   .toFormat("jpeg")
-  //   .jpeg({ quality: 90 })
-  //   .toFile(`frontend/public/img/user/${req.file.filename}`);
-  // next();
+
+  const storagePath = path.join(__dirname, '..', 'uploads', 'user');
+
+  await sharp(req.file.buffer)
+    .resize(500, 500)
+    .toFormat('jpeg')
+    .jpeg({ quality: 90 })
+    .toFile(path.join(storagePath, req.file.filename));
+
+  next();
 });
+
+// const resizeUserPhoto = asyncHandler(async (req, res, next) => {
+//   if (!req.file) return next();
+
+//   req.file.filename = `user-${req.user._id}-${Date.now()}.jpeg`;
+
+//   sharp(req.file.buffer)
+//     .resize(500, 500)
+//     .toFormat("jpeg")
+//     .jpeg({ quality: 90 })
+//     .toFile(`frontend/public/img/user/${req.file.filename}`);
+//   next();
+// });
 
 const getMe = (req, res, next) => {
   req.params.id = req.user._id;

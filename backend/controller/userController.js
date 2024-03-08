@@ -38,13 +38,22 @@ const resizeUserPhoto = asyncHandler(async (req, res, next) => {
   if (!req.file) return next();
 
   req.file.filename = `user-${req.user._id}-${Date.now()}.jpeg`;
-
-  sharp(req.file.buffer)
-    .resize(500, 500)
-    .toFormat("jpeg")
-    .jpeg({ quality: 90 })
-    .toFile(`frontend/public/img/user/${req.file.filename}`);
-  next();
+  try {
+    await sharp(req.file.buffer)
+      .resize(500, 500)
+      .toFormat("jpeg")
+      .jpeg({ quality: 90 })
+      .toFile(`uploads/user/${req.file.filename}`);
+  } catch (error) {
+    return next(new AppError('Error processing image', 500));
+  }
+  next()
+  // sharp(req.file.buffer)
+  //   .resize(500, 500)
+  //   .toFormat("jpeg")
+  //   .jpeg({ quality: 90 })
+  //   .toFile(`frontend/public/img/user/${req.file.filename}`);
+  // next();
 });
 
 const getMe = (req, res, next) => {

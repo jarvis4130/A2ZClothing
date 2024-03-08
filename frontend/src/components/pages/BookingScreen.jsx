@@ -8,7 +8,7 @@ function BookingScreen() {
   const { userInfo } = useSelector((state) => state.auth);
 
   const { data, isLoading } = useGetMyProductsQuery();
-  console.log(data?.products);
+  // console.log(data?.products);
 
   const products = data?.products;
   // console.log(products);

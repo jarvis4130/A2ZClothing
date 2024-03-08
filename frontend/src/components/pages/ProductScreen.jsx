@@ -70,7 +70,7 @@ function ProductScreen() {
       // console.log(res);
       toast.success("Review Submitted.");
     } catch (error) {
-      console.error("Error publishing review:", error);
+      toast.error(error?.data?.message || error.error)
     }
   };
 

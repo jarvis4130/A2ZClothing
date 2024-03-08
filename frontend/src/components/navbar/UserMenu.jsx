@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
 
+import { toast } from "react-hot-toast";
+
 function UserMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
@@ -24,7 +26,8 @@ function UserMenu() {
       dispatch(logout());
       navigate("/login");
     } catch (error) {
-      console.log(error);
+      // toast.error(error?.data?.message || error.error)
+      // console.log(error);
     }
   };
 
@@ -60,7 +63,6 @@ function UserMenu() {
           <div className="hidden md:block">
             <Avatar userPic={userInfo?.data?.user?.photo} />
           </div>
-          {/* {console.log(userInfo?.data?.user?.photo)} */}
           <div className=" hidden md:block">{userInfo?.data?.user?.name}</div>
         </div>
       </div>

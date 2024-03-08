@@ -63,7 +63,7 @@ function LoginScreen() {
       toast.success("Reset Link sent to your Mail.");
     } catch (error) {
       toast.error(error?.data?.message || error.error);
-      console.log(error);
+      // console.log(error);
     }
   };
 

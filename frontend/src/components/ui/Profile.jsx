@@ -25,11 +25,11 @@ function Profile() {
       formData.append("photo", photo);
 
       const res = await updateMe(formData).unwrap();
-      console.log(res);
+      // console.log(res);
       dispatch(setCredentials({ ...res }));
     } catch (error) {
       toast.error(error?.data?.message || error.error);
-      console.log(error);
+      // console.log(error);
     }
   };
   return (

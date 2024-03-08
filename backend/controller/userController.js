@@ -63,7 +63,7 @@ const filterObj = (obj, ...allowedFields) => {
 };
 
 const updateMe = asyncHandler(async (req, res, next) => {
-  console.log(req.file);
+  // console.log(req.file);
   if (req.body.password || req.body.passwordConfirm) {
     return next(
       new AppError(
@@ -80,7 +80,7 @@ const updateMe = asyncHandler(async (req, res, next) => {
     new: true,
     runValidators: true,
   });
-  console.log(updatedUser);
+  // console.log(updatedUser);
   res.status(200).json({
     status: "success",
     data: {
@@ -127,7 +127,7 @@ const addToWishList = asyncHandler(async (req, res) => {
     return item.product.equals(productId);
   });
 
-  console.log(isProductInWishlist);
+  // console.log(isProductInWishlist);
 
   if (isProductInWishlist) {
     // If the product is already in the wishlist, remove it

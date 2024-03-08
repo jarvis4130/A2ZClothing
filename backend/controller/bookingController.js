@@ -23,7 +23,9 @@ const getCheckoutSession = asyncHandler(async (req, res, next) => {
       currency: "inr",
       product_data: {
         name: `${product.brand} Product`,
-        images: [`${req.protocol}://localhost:5173${product.img}`],
+        images: [`${req.protocol}://${req.get(
+          "host"
+        )}/${product.img}`],
       },
       unit_amount: product.unitPrice * 100,
     },
@@ -36,10 +38,14 @@ const getCheckoutSession = asyncHandler(async (req, res, next) => {
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     mode: "payment",
-    success_url: `${req.protocol}://localhost:5173/api/products?user=${
+    success_url: `${req.protocol}://${req.get(
+      "host"
+    )}/api/products?user=${
       req.user._id
     }&product=${productIds.join(",")}&quantity=${productQuantity.join(",")}`,
-    cancel_url: `${req.protocol}://localhost:5173/app/cart`,
+    cancel_url: `${req.protocol}://${req.get(
+      "host"
+    )}/app/cart`,
     customer_email: req.user.email,
     // client_reference_id: req.params.productId,
     line_items: lineItems,
@@ -75,17 +81,19 @@ const createBookingsCheckout = asyncHandler(async (req, res, next) => {
   });
   // console.log(response);
 
-  res.redirect("http://localhost:5173/app");
+  res.redirect(`${req.protocol}://${req.get(
+    "host"
+  )}/app`);
 });
 
 const getMyProducts = asyncHandler(async (req, res, next) => {
   // 1) Find all bookings
   const bookings = await Booking.find({ user: req.user._id });
-  console.log(bookings);
+  // console.log(bookings);
 
   // 2) Extract unique product IDs using Set
   const productIds = bookings.map((el) => el.product);
-  console.log(productIds);
+  // console.log(productIds);
 
   const flattenedProductIds = [].concat(...productIds);
 
@@ -93,10 +101,10 @@ const getMyProducts = asyncHandler(async (req, res, next) => {
   const uniqueProductIds = [
     ...new Set(flattenedProductIds.map((product) => product._id.toString())),
   ];
-  console.log(uniqueProductIds);
+  // console.log(uniqueProductIds);
 
   const products = await Product.find({ _id: { $in: uniqueProductIds } });
-  console.log(products);
+  // console.log(products);
 
   res.status(200).json({
     title: "My Products",

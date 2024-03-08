@@ -42,7 +42,8 @@ function ProductCard({
         // Update the wishlist state based on the result
         setWishlist(isProductInWishlist);
       } catch (error) {
-        console.error("Error fetching user or checking wishlist:", error);
+        // toast.error(error?.data?.message || error.error)
+        // console.error("Error fetching user or checking wishlist:", error);
       }
     };
 

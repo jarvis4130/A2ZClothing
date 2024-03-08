@@ -8,7 +8,7 @@ function ShowItems({ productId, booking }) {
   const { data, isLoading } = useGetProductDetailsQuery(productId);
   const product = data?.data?.doc;
 
-  console.log(product)
+  // console.log(product)
 
   // console.log(productId);
 

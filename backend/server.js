@@ -8,6 +8,7 @@ const xss = require("xss-clean");
 const hpp = require("hpp");
 const cookieParser = require("cookie-parser");
 const path = require("path");
+const compression = require("compression");
 
 const productRouter = require("./routes/productRoute");
 const userRouter = require("./routes/userRoute");
@@ -59,6 +60,9 @@ app.use(
     ],
   })
 );
+// text compression
+app.use(compression());
+
 app.use("/api/products", productRouter);
 app.use("/api/users", userRouter);
 app.use("/api/reviews", reviewRouter);

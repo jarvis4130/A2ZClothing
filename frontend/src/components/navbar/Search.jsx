@@ -16,14 +16,14 @@ function Search() {
       navigate("/app");
     }
     // navigate()
-    console.log("clicked");
+    // console.log("clicked");
   };
 
   return (
     <div className=" bg-white-50 border-[1px] w-4/6 sm:w-full md:w-auto py-2 rounded-full  shadow-sm hover:shadow-md transition cursor-pointer">
       <div className="flex flex-row items-center justify-between ">
         <div className=" hidden sm:block text-sm font-semibold px-6 ">
-          <Link to="app/my-wishlist">My Wishlist</Link>
+          <Link to="/app/my-wishlist">My Wishlist</Link>
         </div>
 
         <Link

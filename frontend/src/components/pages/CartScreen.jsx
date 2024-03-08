@@ -30,7 +30,7 @@ function Cart() {
       "Content-Type": "application/json",
     };
     const session = await axios.post(
-      "http://localhost:5173/api/bookings/checkout-session",
+      "/api/bookings/checkout-session",
       body,
       { headers: headers }
     );

@@ -11,17 +11,6 @@ const multer = require("multer");
 const sharp = require("sharp");
 const path = require("path");
 
-const winston = require("winston");
-const { combine, timestamp, printf } = winston.format;
-const myFormat = printf(({ level, message, timestamp }) => {
-  return `${timestamp} ${level}: ${message}`;
-});
-const logger = winston.createLogger({
-  level: "debug", // Set the desired logging level here
-  format: combine(timestamp(), myFormat),
-  transports: [new winston.transports.Console()],
-});
-
 // const multerStorage = multer.diskStorage({
 //   destination: (req, file, cb) => {
 //     cb(null, "frontend/public/img/user");
@@ -49,7 +38,7 @@ const resizeUserPhoto = asyncHandler(async (req, res, next) => {
   if (!req.file) return next();
 
   req.file.filename = `user-${req.user._id}-${Date.now()}.jpeg`;
-  const outputPath = path.resolve(__dirname, '../../frontend/public/img/user/', req.file.filename);
+  const outputPath = path.resolve(__dirname, '../../frontend/dist/img/user/', req.file.filename);
 
   await sharp(req.file.buffer)
     .resize(500, 500)

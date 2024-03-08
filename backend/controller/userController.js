@@ -39,7 +39,8 @@ const resizeUserPhoto = asyncHandler(async (req, res, next) => {
 
   req.file.filename = `user-${req.user._id}-${Date.now()}.jpeg`;
 
-  const storagePath = path.join(__dirname, "..", "uploads", "user");
+  const storagePath = path.join(__dirname, "..", "uploads", "users");
+  console.log(storagePath);
 
   try {
     await sharp(req.file.buffer)

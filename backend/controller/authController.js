@@ -44,13 +44,15 @@ const signUp = asyncHandler(async (req, res, next) => {
     passwordConfirm: req.body.passwordConfirm,
   });
 
-  if (process.env.NODE_ENV === "production") {
-    const url = `${req.protocol}://${req.get("host")}/app/profile`;
-  } else {
-    const url = `${req.protocol}://localhost:5173/app/profile`;
-  }
+  // if (process.env.NODE_ENV === "production") {
+    const url = `https://a2zclothing.onrender.com/app/profile`;
+  // } else {
+  //   const url = `http://localhost:5173/app/profile`;
+  // }
 
-  await new Email(newUser, url).sendWelcome();
+  console.log(url)
+
+  // await new Email(newUser, url).sendWelcome();
 
   createSendToken(newUser, 201, req, res);
 });

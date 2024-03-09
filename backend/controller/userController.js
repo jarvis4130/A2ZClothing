@@ -11,16 +11,16 @@ const multer = require("multer");
 const sharp = require("sharp");
 const path = require("path");
 
-// const multerStorage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, "frontend/public/img/user");
-//   },
-//   filename: (req, file, cb) => {
-//     const ext = file.mimetype.split("/")[1];
-//     cb(null, `user-${req.user._id}-${Date.now()}.${ext}`);
-//   },
-// });
-const multerStorage = multer.memoryStorage();
+const multerStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "../../frontend/dist/img/user");
+  },
+  filename: (req, file, cb) => {
+    const ext = file.mimetype.split("/")[1];
+    cb(null, `user-${req.user._id}-${Date.now()}.${ext}`);
+  },
+});
+// const multerStorage = multer.memoryStorage();
 
 const multerFilter = (req, file, cb) => {
   if (file.mimetype.startsWith("image")) {

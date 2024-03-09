@@ -13,7 +13,7 @@ const path = require("path");
 
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "../../frontend/dist/img/user");
+    cb(null, "../../frontend/public/img/user");
   },
   filename: (req, file, cb) => {
     const ext = file.mimetype.split("/")[1];
@@ -38,7 +38,11 @@ const resizeUserPhoto = asyncHandler(async (req, res, next) => {
   if (!req.file) return next();
 
   req.file.filename = `user-${req.user._id}-${Date.now()}.jpeg`;
-  const outputPath = path.resolve(__dirname, '../../frontend/dist/img/user/', req.file.filename);
+  const outputPath = path.resolve(
+    __dirname,
+    "../../frontend/public/img/user/",
+    req.file.filename
+  );
 
   await sharp(req.file.buffer)
     .resize(500, 500)

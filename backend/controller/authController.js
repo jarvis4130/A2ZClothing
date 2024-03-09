@@ -45,14 +45,12 @@ const signUp = asyncHandler(async (req, res, next) => {
   });
 
   // if (process.env.NODE_ENV === "production") {
-    const url = `https://a2zclothing.onrender.com/app/profile`;
+  const url = `https://a2zclothing.onrender.com/app/profile`;
   // } else {
   //   const url = `http://localhost:5173/app/profile`;
   // }
 
-  console.log(url)
-
-  // await new Email(newUser, url).sendWelcome();
+  await new Email(newUser, url).sendWelcome();
 
   createSendToken(newUser, 201, req, res);
 });
@@ -192,7 +190,7 @@ const forgotPassword = asyncHandler(async (req, res, next) => {
     //   "host"
     // )}/api/users/resetPassword/${resetToken}`;
     // if (process.env.NODE_ENV === "production") {
-      const resetURL = `https://a2zclothing.onrender.com/users/resetPassword/${resetToken}`;
+    const resetURL = `https://a2zclothing.onrender.com/users/resetPassword/${resetToken}`;
     // } else {
     //   const resetURL = `${req.protocol}://localhost:5173/users/resetPassword/${resetToken}`;
     // }

@@ -51,7 +51,7 @@ function LoginScreen() {
       dispatch(setCredentials({ ...res }));
       navigate(redirect);
     } catch (error) {
-      toast.error(error)
+      toast.error(error|| "Your credentials are wrong");
       // toast.error(error?.data?.message || error.error);
     }
   };
